@@ -45,4 +45,4 @@ async function operation4() {
 }
 
 // Call the main function
-myFunction();
+refactorCode();
