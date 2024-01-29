@@ -1,48 +1,50 @@
-async function refactorCode() {
+async function mainFunction() {
+  let error = "S_OK";
+
   try {
-    await operation1();
-    await operation2();
-    await operation3();
-    await operation4();
-  } catch (error) {
-    // Handle the error based on the specific operation that failed
-    if (error.message === "OPERATION4FAILED") {
-      // Handle Operation4 failure
-    } else if (error.message === "OPERATION3FAILED") {
-      // Handle Operation3 failure
-    } else if (error.message === "OPERATION2FAILED") {
-      // Handle Operation2 failure
-    } else if (error.message === "OPERATION1FAILED") {
-      // Handle Operation1 failure
-    } else {
-      // Handle other types of errors
+    if ((await operation1()) !== "S_OK") {
+      error = "OPERATION1FAILED";
+    } else if ((await operation2()) !== "S_OK") {
+      error = "OPERATION2FAILED";
+    } else if ((await operation3()) !== "S_OK") {
+      error = "OPERATION3FAILED";
+    } else if ((await operation4()) !== "S_OK") {
+      error = "OPERATION4FAILED";
     }
+  } catch (e) {
+    // Handle unexpected errors
+    console.error("Unexpected error:", e);
+    error = "UNEXPECTEDERROR";
   }
+
+  return error;
 }
 
 async function operation1() {
   // Perform Operation1
-  // If Operation1 fails, throw an error
-  throw new Error("OPERATION1FAILED");
+  // If Operation1 fails, return error code
+  return Math.random() > 0.5 ? "S_OK" : "OPERATION1FAILED";
 }
 
 async function operation2() {
   // Perform Operation2
-  // If Operation2 fails, throw an error
-  throw new Error("OPERATION2FAILED");
+  // If Operation2 fails, return error code
+  return Math.random() > 0.5 ? "S_OK" : "OPERATION2FAILED";
 }
 
 async function operation3() {
   // Perform Operation3
-  // If Operation3 fails, throw an error
-  throw new Error("OPERATION3FAILED");
+  // If Operation3 fails, return error code
+  return Math.random() > 0.5 ? "S_OK" : "OPERATION3FAILED";
 }
 
 async function operation4() {
   // Perform Operation4
-  // If Operation4 fails, throw an error
-  throw new Error("OPERATION4FAILED");
+  // If Operation4 fails, return error code
+  return Math.random() > 0.5 ? "S_OK" : "OPERATION4FAILED";
 }
 
 // Call the main function
-refactorCode();
+mainFunction().then((result) => {
+  console.log("Result:", result);
+});
